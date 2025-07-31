@@ -7,19 +7,38 @@
     <title>Document</title>
   </head>
   <body>
-    <div>
-      <button id="btnCrearTicket">Crear Ticket</button>
-      <button id="btnVerTickets">Ver Tickets</button>
-      <button id="btnFiltrarTickets">Filtrar Tickets por Estado</button>
+    <div class="ticket-buttons-container">
+      <button class="ticket-buttons" id="btnCrearTicket">Crear Ticket</button>
+      <button class="ticket-buttons" id="btnVerTickets">Ver Tickets</button>
+      <button class="ticket-buttons" id="btnFiltrarTickets">
+        Filtrar Tickets por Estado
+      </button>
     </div>
 
-    <div id="crearTicket">
+    <div class="create-ticket-container" id="crearTicket">
       <h3>Crear Nuevo Ticket</h3>
-      <form action="" id="formCrearTicket">
-        <input type="text" id="nombre" required />
-        <textarea name="" id="desc" required></textarea>
-        <button id="btnCrear">Crear Ticket</button>
+      <form class="form-ticket-container" action="" id="formCrearTicket">
+        <div class="input-container">
+          <p>Nombre del Ticket:</p>
+          <input type="text" id="nombre" required />
+        </div>
+        <div class="input-container">
+          <p>Descripcion:</p>
+          <textarea name="" id="desc" required></textarea>
+        </div>
+        <button class="btnCrear" id="btnCrear">Crear Ticket</button>
       </form>
+    </div>
+
+    <div id="filtroTickets">
+      <div id="formFiltro">
+        <select id="filtro">
+          <option value="todos">Todos</option>
+          <option value="activos">Activos</option>
+          <option value="cerrados">Cerrados</option>
+        </select>
+        <button id="btnFiltrar">Filtrar</button>
+      </div>
     </div>
 
     <div id="verTickets"></div>

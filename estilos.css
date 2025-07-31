@@ -1,0 +1,133 @@
+:root {
+  --color-light: #edcfc6;
+  --color-medium: #7c392c;
+  --color-dark: #260c1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--color-dark) 0%,
+    #3d1625 50%,
+    var(--color-medium) 100%
+  );
+  color: var(--color-light);
+  overflow-x: hidden;
+  margin: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.ticket-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket-buttons {
+  height: 6vh;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: rgba(237, 207, 198, 0.15);
+  border: 2px solid var(--color-light);
+  color: var(--color-light);
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+
+.ticket-buttons:hover {
+  background: var(--color-medium);
+  border-color: var(--color-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(124, 57, 44, 0.4);
+}
+
+.create-ticket-container {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  padding: 14px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+}
+
+.create-ticket-container h3 {
+  font-size: 1.5rem;
+}
+
+.form-ticket-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-ticket-container input {
+  height: 40px;
+  border-radius: 12px;
+  border: 2px solid rgba(124, 57, 44, 0.3);
+  background: rgba(245, 229, 223, 0.8);
+  color: var(--color-dark);
+  padding-left: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-ticket-container input:focus {
+  outline: none;
+  border-color: var(--color-medium);
+  background: rgba(245, 229, 223, 1);
+  box-shadow: 0 0 15px rgba(124, 57, 44, 0.2);
+}
+
+.form-ticket-container textarea {
+  height: 100px;
+  border-radius: 12px;
+  border: 2px solid rgba(124, 57, 44, 0.3);
+  background: rgba(245, 229, 223, 0.8);
+  color: var(--color-dark);
+  padding-left: 8px;
+  padding-top: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-container p {
+  font-weight: 500;
+}
+
+.btnCrear {
+  background: linear-gradient(45deg, var(--color-medium), var(--color-dark));
+  color: var(--color-light);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(124, 57, 44, 0.4);
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.btnCrear:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(124, 57, 44, 0.6);
+}
