@@ -31,6 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  padding-top: 1rem;
 }
 
 .ticket-buttons {
@@ -199,8 +200,64 @@ body {
 
 .container-btn-ticket {
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
+  gap: 12px;
   padding-top: 1rem;
+  padding-bottom: 0.3rem;
   border-top: 2px solid rgba(124, 57, 44, 0.2);
+}
+
+.filtroTickets {
+  background: rgba(237, 207, 198, 0.95);
+  width: 100%;
+  color: var(--color-dark);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filtroTickets select {
+  height: 40px;
+  border-radius: 12px;
+  border: 2px solid rgba(124, 57, 44, 0.3);
+  background: rgba(245, 229, 223, 0.8);
+  color: var(--color-dark);
+  padding-left: 8px;
+  font-size: 1rem;
+}
+
+.filtroTickets p {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.btnFiltrar {
+  background: var(--color-medium);
+  color: var(--color-light);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 15px rgba(124, 57, 44, 0.4);
+  min-width: fit-content;
+}
+
+.btnFiltrar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(124, 57, 44, 0.6);
+}
+
+.no-tickets {
+  font-size: 1.2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }

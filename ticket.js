@@ -36,7 +36,7 @@ function verTickets(lista) {
   let mensaje;
 
   if (lista.length === 0) {
-    mensaje = "No hay tickets";
+    mensaje = `<p class="no-tickets"><strong>No hay tickets</strong></p>`;
     document.getElementById("verTickets").innerHTML = mensaje;
     return;
   }
@@ -169,9 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("btnFiltrarTickets")
     .addEventListener("click", mostrarFiltroTickets);
 
-  document.getElementById("btnFiltrar").addEventListener("click", (event) => {
-    event.preventDefault();
-    let valorFiltro = document.getElementById("filtro").value;
-    filtrarTickerEstado(valorFiltro);
+  document.querySelectorAll(".btnFiltrar").forEach((boton) => {
+    boton.addEventListener("click", (event) => {
+      event.preventDefault();
+      const valorFiltro = event.target.value;
+      filtrarTickerEstado(valorFiltro);
+    });
   });
 });
