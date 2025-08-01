@@ -9,15 +9,27 @@ let tickets = [];
 let idTicket = 1;
 
 function mostrarFormulario() {
-  document.getElementById("crearTicket").style.display = "block";
+  document.getElementById("crearTicket").style.display = "flex";
   document.getElementById("verTickets").style.display = "none";
+  document.getElementById("filtroTickets").style.display = "none";
 }
 
 function mostrarTickets() {
   document.getElementById("crearTicket").style.display = "none";
-  document.getElementById("verTickets").style.display = "block";
+  document.getElementById("verTickets").style.display = "flex";
+  document.getElementById("filtroTickets").style.display = "none";
 
   verTickets(tickets);
+}
+
+function mostrarFiltroTickets() {
+  document.getElementById("crearTicket").style.display = "none";
+  document.getElementById("verTickets").style.display = "flex";
+  if (tickets.length > 0) {
+    document.getElementById("filtroTickets").style.display = "flex";
+  }
+
+  filtrarTickerEstado();
 }
 
 function verTickets(lista) {
@@ -32,17 +44,19 @@ function verTickets(lista) {
   mensaje = `<h3>LISTA DE TICKETS</h3>`;
 
   lista.forEach((ticket) => {
-    mensaje += `
+    mensaje += `<div class="ticket">
   <p><strong>ID: </strong>${ticket.id}</p>
   <p><strong>Nombre: </strong>${ticket.nombre}</p>
   <p><strong>Descripcion: </strong>${ticket.descripcion}</p>
   <p><strong>Estado: </strong>${ticket.estado}</p>
+  <div class="container-btn-ticket">
   <button class="btnModificar" data-id=${ticket.id}>Modificar</button>
   ${
     ticket.estado == true
       ? `<button class="btnCerrar" data-id=${ticket.id}>Cerrar</button>`
       : ``
-  }`;
+  }</div>
+  </div>`;
   });
 
   const contenedor = document.getElementById("verTickets");
@@ -55,43 +69,52 @@ function verTickets(lista) {
       cerrarTicket(id);
     });
   });
+
+  const botonesModificar = contenedor.querySelectorAll(".btnModificar");
+  botonesModificar.forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const id = parseInt(boton.getAttribute("data-id"));
+      modificarTicket(id);
+    });
+  });
 }
 
-function filtrarTickerEstado() {
+function filtrarTickerEstado(estado) {
   let estadoFiltrar;
 
-  let estadoBool = true;
-  while (estadoBool) {
-    if (estadoFiltrar == 1 || estadoFiltrar == 0) {
-      estadoBool = false;
-    } else {
-      console.error("Estado incorrecto");
-
-      estadoFiltrar = parseInt(
-        prompt("Que estado queres ver? 0-Falso 1-Verdadero")
-      );
-    }
-  }
-
-  if (estadoFiltrar == 0) {
+  if (estado === "cerrados") {
     estadoFiltrar = false;
-  } else {
+  } else if (estado === "activos") {
     estadoFiltrar = true;
+  } else {
+    verTickets(tickets);
+    return;
   }
 
   let resultado = tickets.filter((ticket) => ticket.estado === estadoFiltrar);
-  console.table(resultado);
+
+  verTickets(resultado);
 }
 
-function generarTicket() {
+function generarTicket(edicion) {
   const nombre = document.getElementById("nombre").value;
   const descripcion = document.getElementById("desc").value;
 
-  let ticketNuevo = new Ticket(idTicket, nombre, descripcion, true);
-  tickets.push(ticketNuevo);
-  alert("TICKET GENERADO CORRECTAMENTE");
+  if (edicion == null) {
+    let ticketNuevo = new Ticket(idTicket, nombre, descripcion, true);
+    tickets.push(ticketNuevo);
+    alert("TICKET GENERADO CORRECTAMENTE");
 
-  idTicket++;
+    idTicket++;
+  } else {
+    edicion.nombre = nombre;
+    edicion.descripcion = descripcion;
+
+    alert("TICKET MODIFICADO CORRECTAMENTE");
+  }
+
+  document.getElementById("formCrearTicket").reset();
+  ticketEditado = null;
 }
 
 function cerrarTicket(id) {
@@ -102,33 +125,31 @@ function cerrarTicket(id) {
     return;
   }
 
-  confirm("Seguro que queres cerrar el ticket?");
-
-  ticket.estado = false;
-  alert("TICKET CERRADO CORRECTAMENTE");
+  if (confirm("Seguro que queres cerrar el ticket?")) {
+    ticket.estado = false;
+    alert("TICKET CERRADO CORRECTAMENTE");
+  }
 
   verTickets(tickets);
 }
 
-function modificarTicket() {
-  let id = parseInt(prompt("Id Ticket a modificar"));
+let ticketEditado = null;
 
-  let existe = tickets.find((ticket) => ticket.id === id);
-  if (!existe) {
-    console.error("No se encontro ticket");
-    return;
-  }
+function modificarTicket(id) {
+  ticketEditado = tickets.find((ticket) => ticket.id === id);
 
-  const nombre = prompt("Nombre del usuario:");
-  const descripcion = prompt("Descripcion del problema");
+  document.getElementById("crearTicket").style.display = "flex";
+  document.getElementById("verTickets").style.display = "none";
+  document.getElementById("filtroTickets").style.display = "none";
 
-  existe.nombre = nombre;
-  existe.descripcion = descripcion;
+  document.getElementById("nombre").value = ticketEditado.nombre;
+  document.getElementById("desc").value = ticketEditado.descripcion;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("crearTicket").style.display = "none";
   document.getElementById("verTickets").style.display = "none";
+  document.getElementById("filtroTickets").style.display = "none";
 
   document
     .getElementById("btnCrearTicket")
@@ -140,7 +161,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("btnCrear").addEventListener("click", (event) => {
     event.preventDefault();
-    generarTicket();
+    generarTicket(ticketEditado);
     document.getElementById("formCrearTicket").reset();
+  });
+
+  document
+    .getElementById("btnFiltrarTickets")
+    .addEventListener("click", mostrarFiltroTickets);
+
+  document.getElementById("btnFiltrar").addEventListener("click", (event) => {
+    event.preventDefault();
+    let valorFiltro = document.getElementById("filtro").value;
+    filtrarTickerEstado(valorFiltro);
   });
 });
