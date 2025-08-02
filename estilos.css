@@ -142,10 +142,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .verTickets h3 {
   font-size: 1.5rem;
+}
+
+.ticket-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch; /* hace que todos los items tengan la misma altura */
 }
 
 .ticket {
@@ -157,6 +166,9 @@ body {
   border-radius: 12px;
   border-top: 4px solid var(--color-medium);
   transition: all 0.3s ease;
+  box-sizing: border-box;
+  height: 100%;
+  word-wrap: break-word;
 }
 
 .ticket:hover {
@@ -168,7 +180,7 @@ body {
   background: var(--color-medium);
   color: var(--color-light);
   border: none;
-  padding: 1rem 2.5rem;
+  padding: 1rem 1.5rem;
   border-radius: 25px;
   font-size: 1rem;
   font-weight: 600;
@@ -182,14 +194,13 @@ body {
   background: var(--color-dark);
   color: var(--color-light);
   border: none;
-  padding: 1rem 2.5rem;
+  padding: 1rem 1.7rem;
   border-radius: 25px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 8px 15px rgba(124, 57, 44, 0.4);
-  min-width: fit-content;
 }
 
 .btnModificar:hover,
@@ -205,6 +216,7 @@ body {
   padding-top: 1rem;
   padding-bottom: 0.3rem;
   border-top: 2px solid rgba(124, 57, 44, 0.2);
+  margin-top: auto;
 }
 
 .filtroTickets {
@@ -260,4 +272,28 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+@media (min-width: 992px) {
+  body {
+    margin: 2% 20% 0 20%;
+  }
+
+  .ticket-buttons-container {
+    flex-direction: row;
+    gap: 14px;
+    padding-top: 1rem;
+  }
+
+  .ticket-buttons {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .ticket-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+  }
 }

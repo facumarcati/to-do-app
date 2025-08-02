@@ -12,6 +12,10 @@ function mostrarFormulario() {
   document.getElementById("crearTicket").style.display = "flex";
   document.getElementById("verTickets").style.display = "none";
   document.getElementById("filtroTickets").style.display = "none";
+
+  document.querySelector(".new-ticket").innerHTML = "Crear Nuevo Ticket";
+  document.getElementById("btnCrear").innerHTML = "Crear Ticket";
+  document.getElementById("formCrearTicket").reset();
 }
 
 function mostrarTickets() {
@@ -42,22 +46,29 @@ function verTickets(lista) {
   }
 
   mensaje = `<h3>LISTA DE TICKETS</h3>`;
+  mensaje += `<div class="ticket-container">`;
 
   lista.forEach((ticket) => {
-    mensaje += `<div class="ticket">
-  <p><strong>ID: </strong>${ticket.id}</p>
-  <p><strong>Nombre: </strong>${ticket.nombre}</p>
-  <p><strong>Descripcion: </strong>${ticket.descripcion}</p>
-  <p><strong>Estado: </strong>${ticket.estado}</p>
-  <div class="container-btn-ticket">
-  <button class="btnModificar" data-id=${ticket.id}>Modificar</button>
-  ${
-    ticket.estado == true
-      ? `<button class="btnCerrar" data-id=${ticket.id}>Cerrar</button>`
-      : ``
-  }</div>
-  </div>`;
+    mensaje += `
+    <div class="ticket">
+      <p><strong>ID: </strong>${ticket.id}</p>
+      <p class="ticket-name"><strong>Nombre: </strong>${ticket.nombre}</p>
+      <p class="ticket-desc"><strong>Descripción: </strong>${
+        ticket.descripcion
+      }</p>
+      <p><strong>Estado: </strong>${ticket.estado}</p>
+      <div class="container-btn-ticket">
+        <button class="btnModificar" data-id="${ticket.id}">Modificar</button>
+        ${
+          ticket.estado == true
+            ? `<button class="btnCerrar" data-id="${ticket.id}">Cerrar</button>`
+            : ``
+        }
+      </div>
+    </div>`;
   });
+
+  mensaje += `</div>`;
 
   const contenedor = document.getElementById("verTickets");
   contenedor.innerHTML = mensaje;
@@ -97,6 +108,8 @@ function filtrarTickerEstado(estado) {
 }
 
 function generarTicket(edicion) {
+  const tituloForm = document.querySelector(".new-ticket");
+
   const nombre = document.getElementById("nombre").value;
   const descripcion = document.getElementById("desc").value;
 
@@ -111,6 +124,8 @@ function generarTicket(edicion) {
     edicion.descripcion = descripcion;
 
     alert("TICKET MODIFICADO CORRECTAMENTE");
+
+    mostrarTickets();
   }
 
   document.getElementById("formCrearTicket").reset();
@@ -136,6 +151,10 @@ function cerrarTicket(id) {
 let ticketEditado = null;
 
 function modificarTicket(id) {
+  const tituloForm = document.querySelector(".new-ticket");
+  tituloForm.innerHTML = "Modificar Ticket";
+  document.getElementById("btnCrear").innerHTML = "Modificar Ticket";
+
   ticketEditado = tickets.find((ticket) => ticket.id === id);
 
   document.getElementById("crearTicket").style.display = "flex";
