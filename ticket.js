@@ -6,7 +6,29 @@ const Ticket = function (id, nombre, descripcion, estado) {
 };
 
 let tickets = [];
-let idTicket = 1;
+let idTicket;
+
+function guardarLista() {
+  const listaJSON = JSON.stringify(tickets);
+  localStorage.setItem("listaTickets", listaJSON);
+}
+
+let listaGuardada = localStorage.getItem("listaTickets");
+
+if (listaGuardada) {
+  tickets = JSON.parse(listaGuardada);
+
+  if (tickets.length > 0) {
+    const maxId = Math.max(...tickets.map((t) => t.id));
+    idTicket = maxId + 1;
+  } else {
+    idTicket = 1;
+  }
+
+  verTickets(tickets);
+} else {
+  idTicket = 1;
+}
 
 function mostrarFormulario() {
   document.getElementById("crearTicket").style.display = "flex";
@@ -58,10 +80,11 @@ function verTickets(lista) {
       }</p>
       <p><strong>Estado: </strong>${ticket.estado}</p>
       <div class="container-btn-ticket">
-        <button class="btnModificar" data-id="${ticket.id}">Modificar</button>
+        
         ${
           ticket.estado == true
-            ? `<button class="btnCerrar" data-id="${ticket.id}">Cerrar</button>`
+            ? `<button class="btnModificar" data-id="${ticket.id}">Modificar</button>
+            <button class="btnCerrar" data-id="${ticket.id}">Cerrar</button>`
             : ``
         }
       </div>
@@ -118,12 +141,16 @@ function generarTicket(edicion) {
     tickets.push(ticketNuevo);
     alert("TICKET GENERADO CORRECTAMENTE");
 
+    guardarLista();
+
     idTicket++;
   } else {
     edicion.nombre = nombre;
     edicion.descripcion = descripcion;
 
     alert("TICKET MODIFICADO CORRECTAMENTE");
+
+    guardarLista();
 
     mostrarTickets();
   }
@@ -142,6 +169,7 @@ function cerrarTicket(id) {
 
   if (confirm("Seguro que queres cerrar el ticket?")) {
     ticket.estado = false;
+    guardarLista();
     alert("TICKET CERRADO CORRECTAMENTE");
   }
 
